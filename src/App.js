@@ -10,7 +10,7 @@ import Home from './pages/Home';
 function App() {
   return (
     <Switch>
-      <PublicRoute path="/LogIn">
+      <PublicRoute path="/SignIn">
         <SignIn />
       </PublicRoute>
       <PrivateRoute path="/">
