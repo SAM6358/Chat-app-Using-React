@@ -4,11 +4,14 @@ import { BrowserRouter } from 'react-router-dom';
 import App from './App';
 import * as serviceWorkerRegistration from './serviceWorkerRegistration';
 import reportWebVitals from './reportWebVitals';
+import { ProfileProvider } from './context/profile.context';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <BrowserRouter>
-    <App />
+    <ProfileProvider>
+      <App />
+    </ProfileProvider>
   </BrowserRouter>
 );
 
