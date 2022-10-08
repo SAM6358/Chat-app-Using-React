@@ -36,11 +36,11 @@ $indent_3: 15px;
 }
 
 .width-200 {
-  width: 200px;
+  width: 200px !important;
 }
 
 .height-200 {
-  height: 200px;
+  height: 200px !important;
 }
 
 .height-220 {
@@ -146,7 +146,7 @@ $indent_3: 15px;
 }
 
 .font-huge {
-  font-size: 100px;
+  font-size: 100px !important;
 }
 
 .contain-scroll {

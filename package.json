@@ -9,7 +9,7 @@
     "firebase": "^8.10.0",
     "node-sass": "^7.0.3",
     "react": "^18.2.0",
-    "react-avatar-editor": "^13.0.0",
+    "react-avatar-editor": "^11.0.7",
     "react-dom": "^18.2.0",
     "react-router": "^5.2.0",
     "react-router-dom": "^5.2.0",
