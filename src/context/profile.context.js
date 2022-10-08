@@ -6,40 +6,38 @@ const ProfileContext = createContext();
 
 export const ProfileProvider = ({ children }) => {
   const [profile, setProfile] = useState(null);
-  const [isLoading, setIsLoading] = useState(true);
+  const [isLoading, setisLoading] = useState(true);
 
   useEffect(() => {
-    let UserRef;
+    let userRef;
     const authUnsub = auth.onAuthStateChanged(authObj => {
       if (authObj) {
-        UserRef = database.ref(`/profiles/${authObj.uid}`);
-        UserRef.on('value', snap => {
-          const [name, createdAt] = snap.val();
-
+        userRef = database.ref(`/profiles/${authObj.uid}`);
+        userRef.on('value', snap => {
+          const { Name, CreatedAt } = snap.val();
           const data = {
-            name,
-            createdAt,
+            Name,
+            CreatedAt,
             uid: authObj.uid,
             email: authObj.email,
           };
-
           setProfile(data);
-          setIsLoading(false);
+          setisLoading(false);
         });
       } else {
-        if (UserRef) {
-          UserRef.off();
+        if (userRef) {
+          userRef.off();
         }
         setProfile(null);
-        setIsLoading(false);
+        setisLoading(false);
       }
-      return () => {
-        authUnsub();
-        if (UserRef) {
-          UserRef.off();
-        }
-      };
     });
+    return () => {
+      authUnsub();
+      if (userRef) {
+        userRef.off();
+      }
+    };
   }, []);
 
   return (
