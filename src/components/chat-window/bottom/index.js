@@ -9,7 +9,7 @@ function assembleMessage(profile, chatId) {
   return {
     roomId: chatId,
     author: {
-      name: profile.Name,
+      Name: profile.Name,
       createdAt: profile.CreatedAt,
       uid: profile.uid,
       ...(profile.avatar ? { avatar: profile.avatar } : {}),

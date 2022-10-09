@@ -5,6 +5,7 @@ import { useModelState } from '../../misc/custom-hooks';
 import { useProfile } from '../../context/profile.context';
 import { database, storage } from '../../misc/firebase';
 import ProfileAvatar from '../ProfileAvatar';
+import { getUserUpdates } from '../../misc/helpers';
 
 const fileInputTypes = '.jpeg,.png,.jpg';
 const acceptedFileTypes = ['image/jpeg', 'image/png', 'image/pjpeg'];
@@ -52,11 +53,16 @@ const AvatarUploadBtn = () => {
       const uploadAvatarResult = await avatarFileRef.put(blob, {
         cacheControl: `public, max-age=${3600 * 24 * 3}`,
       });
+
       const downloadUrl = await uploadAvatarResult.ref.getDownloadURL();
-      const userAvatarRef = database
-        .ref(`/profiles/${profile.uid}`)
-        .child('avatar');
-      await userAvatarRef.set(downloadUrl);
+      const updates = await getUserUpdates(
+        profile.uid,
+        'avatar',
+        downloadUrl,
+        database
+      );
+
+      await database.ref().update(updates);
       setIsLoading(false);
       Alert.info('Avatar has been uploaded successfully', 4000);
     } catch (error) {
