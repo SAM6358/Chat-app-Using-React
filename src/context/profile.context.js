@@ -40,7 +40,7 @@ export const ProfileProvider = ({ children }) => {
           setisLoading(false);
         });
         database.ref('.info/connected').on('value', snap => {
-          if (snap.val() === false) {
+          if (!!snap.val() === false) {
             // eslint-disable-next-line no-useless-return
             return;
           }
