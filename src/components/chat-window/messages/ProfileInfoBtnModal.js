@@ -30,7 +30,7 @@ const ProfileInfoBtnModal = ({ profile, ...btnProps }) => {
           <p>Member since : {memberSince} </p>
         </Modal.Body>
         <Modal.Footer>
-          <Button block onClick={close}>
+          <Button block color="cyan" onClick={close}>
             Close
           </Button>
         </Modal.Footer>
