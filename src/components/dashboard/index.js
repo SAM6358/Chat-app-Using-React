@@ -18,7 +18,6 @@ const Dashboard = ({ onSignOut }) => {
         newData,
         database
       );
-      console.log('updates', updates);
       await database.ref().update(updates);
       Alert.success('Nickname has been Updated', 4000);
     } catch (error) {
