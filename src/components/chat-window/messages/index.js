@@ -1,9 +1,10 @@
+/* eslint-disable consistent-return */
 /* eslint-disable no-alert */
 /* eslint-disable no-param-reassign */
 import React, { useCallback, useEffect, useState } from 'react';
 import { useParams } from 'react-router';
 import { Alert } from 'rsuite';
-import { auth, database } from '../../../misc/firebase';
+import { auth, database, storage } from '../../../misc/firebase';
 import { transformToArrWithId } from '../../../misc/helpers';
 import MessageItem from './MessageItem';
 
@@ -80,7 +81,7 @@ const Messages = () => {
   }, []);
 
   const handleDelete = useCallback(
-    async msgId => {
+    async (msgId, file) => {
       if (
         !window.confirm(
           'Do you want to delete this message? (Do know that once deleted, message can not be recovered from the database.)'
@@ -108,7 +109,15 @@ const Messages = () => {
         await database.ref().update(updates);
         Alert.info('Message has been deleted', 4000);
       } catch (error) {
-        Alert.error(error.message, 4000);
+        return Alert.error(error.message, 4000);
+      }
+      if (file) {
+        try {
+          const fileRef = storage.refFromURL(file.url);
+          await fileRef.delete();
+        } catch (error) {
+          Alert.error(error.message, 4000);
+        }
       }
     },
     [messages, chatId]
