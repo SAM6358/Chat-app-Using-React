@@ -67,7 +67,7 @@ const MessageItem = ({ message, handleAdmin, handleLike, handleDelete }) => {
           <IconBtnControl
             isVisible={canShowIcons}
             tooltip="Delete this message"
-            iconName="close"
+            iconName="trash"
             onClick={() => {
               handleDelete(message.id);
             }}
