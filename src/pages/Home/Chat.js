@@ -33,7 +33,6 @@ const Chat = () => {
     admins,
     isAdmin,
   };
-
   return (
     <CurrentRoomsProvider data={currentRoomData}>
       <div className="chat-top">
