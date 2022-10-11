@@ -6,6 +6,7 @@ import { useHover } from '../../../misc/custom-hooks';
 import { auth } from '../../../misc/firebase';
 import PresenceDot from '../../PresenceDot';
 import ProfileAvatar from '../../ProfileAvatar';
+import IconBtnControl from './IconBtnControl';
 import ProfileInfoBtnModal from './ProfileInfoBtnModal';
 
 const MessageItem = ({ message, handleAdmin }) => {
@@ -22,7 +23,7 @@ const MessageItem = ({ message, handleAdmin }) => {
 
   return (
     <li
-      className={`padded mb-1 cursor-pointer ${isHovered ? 'bg-black-04' : ''}`}
+      className={`padded mb-1 cursor-pointer ${isHovered ? 'bg-black-02' : ''}`}
       ref={selfRef}
     >
       <div className="d-flex align-items-center font-bolder mb-1">
@@ -47,6 +48,14 @@ const MessageItem = ({ message, handleAdmin }) => {
         <TimeAgo
           datetime={createdAt}
           className="font-normal text-black-45 ml-2"
+        />
+        <IconBtnControl
+          {...(true ? { color: 'red' } : {})}
+          isVisible
+          tooltip="Click to like the message"
+          iconName="heart"
+          onClick={() => {}}
+          badgeContent={5}
         />
       </div>
 
