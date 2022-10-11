@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from 'react';
+import React, { useState } from 'react';
 import { useParams } from 'react-router';
 import { Alert, Button, Icon, InputGroup, Modal, Uploader } from 'rsuite';
 import { useModelState } from '../../../misc/custom-hooks';
@@ -21,9 +21,9 @@ const AttachmentBtnModal = ({ afterUpload }) => {
     setFileList(filtered);
   };
 
-  const onUpload = useCallback(async () => {
+  const onUpload = async () => {
     try {
-      const uploadPromises = FileList.map(file => {
+      const uploadPromises = fileList.map(file => {
         return storage
           .ref(`/chat/${chatId}`)
           .child(Date.now() + file.name)
@@ -50,7 +50,7 @@ const AttachmentBtnModal = ({ afterUpload }) => {
       setIsLoading(false);
       Alert.error(error.message, 4000);
     }
-  }, []);
+  };
 
   return (
     <>

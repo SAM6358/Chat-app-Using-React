@@ -65,10 +65,46 @@ const Bottom = () => {
     }
   };
 
+  const afterUpload = useCallback(
+    async files => {
+      setIsLoading(true);
+      const updates = {};
+      let count = 0;
+      files.forEach(file => {
+        const MsgData = assembleMessage(profile, chatId);
+        MsgData.file = file;
+
+        const messageId = database.ref('messages').push().key;
+        updates[`/messages/${messageId}`] = MsgData;
+        count += 1;
+      });
+      const lastMessageId = Object.keys(updates).pop();
+      updates[`/rooms/${chatId}/lastMessage`] = {
+        ...updates[lastMessageId],
+        msgId: lastMessageId,
+      };
+      let alertMsg;
+      if (count > 1) {
+        alertMsg = 'Files Uploaded Successfully';
+      } else {
+        alertMsg = 'File Uploaded Successfully';
+      }
+      try {
+        await database.ref().update(updates);
+        setIsLoading(false);
+        Alert.success(alertMsg, 4000);
+      } catch (error) {
+        setIsLoading(false);
+        Alert.error(error.message, 4000);
+      }
+    },
+    [chatId, profile]
+  );
+
   return (
     <div>
       <InputGroup>
-        <AttachmentBtnModal />
+        <AttachmentBtnModal afterUpload={afterUpload} />
         <Input
           placeholder="Type a message"
           value={input}
