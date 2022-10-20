@@ -1,7 +1,7 @@
 /* eslint-disable react/jsx-no-constructed-context-values */
 import React, { createContext, useContext, useEffect, useState } from 'react';
 import firebase from 'firebase';
-import { auth, database } from '../misc/firebase';
+import { auth, database, messaging, fcmVapidKey } from '../misc/firebase';
 
 export const isOfflineForDatabase = {
   state: 'offline',
@@ -22,7 +22,7 @@ export const ProfileProvider = ({ children }) => {
   useEffect(() => {
     let userRef;
     let userStatusDatabaseRef;
-    const authUnsub = auth.onAuthStateChanged(authObj => {
+    const authUnsub = auth.onAuthStateChanged(async authObj => {
       if (authObj) {
         userRef = database.ref(`/profiles/${authObj.uid}`);
         userStatusDatabaseRef = database.ref(`/status/${authObj.uid}`);
@@ -51,6 +51,20 @@ export const ProfileProvider = ({ children }) => {
           .then(() => {
             userStatusDatabaseRef.set(isOnlineForDatabase);
           });
+        if (messaging) {
+          try {
+            const currentToken = await messaging.getToken({
+              vapidKey: fcmVapidKey,
+            });
+            if (currentToken) {
+              await database
+                .ref(`/fcm_tokens/${currentToken}`)
+                .set(authObj.uid);
+            }
+          } catch (error) {
+            console.log('An error occured while retrieving the token.', error);
+          }
+        }
       } else {
         if (userRef) {
           userRef.off();
