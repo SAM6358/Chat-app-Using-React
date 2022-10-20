@@ -36,7 +36,7 @@ const SignIn = () => {
             <Panel>
               <div className="text-center">
                 <h1>Welcome to Chatter</h1>
-                <p>Progressive web-app for neophytes</p>
+                <p>This is where fun starts</p>
               </div>
               <div className="mt-3">
                 <Button block color="violet" onClick={onGoogleSignIn}>
