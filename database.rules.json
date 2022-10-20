@@ -19,6 +19,7 @@
     "messages": {
       ".read": "auth!=null",
       ".write": "auth!=null",
+      ".indexOn": "roomId",
       "$message_id": {
         ".read": "auth!=null",
         ".write": "auth!=null"
@@ -31,6 +32,7 @@
       }
     },
     "fcm_tokens": {
+      ".indexOn": ".value",
       "$token_id": {
         ".read": false,
         ".write": "newData.val()=== auth.uid"

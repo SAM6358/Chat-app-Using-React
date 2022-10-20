@@ -11,5 +11,5 @@ admin.initializeApp({
 });
 
 // eslint-disable-next-line object-curly-spacing
-const { sendFCM } = require('./src/fcm');
-exports.sendFCM = sendFCM;
+const { sendFcm } = require('./src/fcm');
+exports.sendFcm = sendFcm;
