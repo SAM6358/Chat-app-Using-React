@@ -11,6 +11,11 @@
       "$rooms_id": {
         ".read": "auth!=null",
         ".write": "!data.exists() || data.child('admins').child(auth.uid).val() === true",
+        "fcmUsers": {
+          "$user_id": {
+            ".write": "auth!=null"
+          }
+        },
         "lastMessage": {
           ".write": "auth!=null"
         }
